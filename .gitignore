@@ -1,0 +1,6 @@
+# User input file for Edge node registration
+node.userinput.json
+# Cert/key files
+**/*.crt
+**/*.pem
+**/*.key

@@ -1,0 +1,8 @@
+{
+    "HZN_ORG_ID": "$(E_HZN_ORG_ID)",
+    "MetadataVars": {
+        "DOCKER_IMAGE_BASE": "$(E_DOCKER_IMAGE_BASE)/$(E_SERVICE_NAME)",
+        "SERVICE_NAME": "$(E_SERVICE_NAME)",
+        "SERVICE_VERSION": "$(E_SERVICE_VERSION)"
+    }
+}

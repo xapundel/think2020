@@ -1,0 +1,13 @@
+{
+  "services": [
+    {
+      "org": "thinkmoscow",
+      "url": "hellothink",
+      "versionRange": "[0.0.0,INFINITY)",
+      "variables": {
+        "MQTT_BROKER_URI": "${MQTT_BROKER_URI}",
+        "USER_EMAIL": "${USER_EMAIL}"
+      }
+    }
+  ]
+}
