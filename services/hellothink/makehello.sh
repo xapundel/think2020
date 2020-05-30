@@ -6,7 +6,7 @@ echo "[hellothink] Service was started"
 TOPIC_NAME=thinkmoscow2020/${HZN_DEVICE_ID}/hello
 
 echo "${USER_EMAIL}" > msg
-mosquitto_pub --insecure -L ${MQTT_BROKER_URI}/${TOPIC_NAME} -q 1 -f msg
+mosquitto_pub --insecure -L ${MQTT_BROKER_URI}/${TOPIC_NAME} -q 1 -r -f msg
 if [ $? -eq 0 ]; then
   echo "[hellothink] hello msg published to MQTT"
 else

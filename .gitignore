@@ -4,3 +4,5 @@ node.userinput.json
 **/*.crt
 **/*.pem
 **/*.key
+# Env variable file for Makefile scripts
+envvars.mk

@@ -1,0 +1,38 @@
+.EXPORT_ALL_VARIABLES:
+
+# Horizon Exchange URI
+HZN_EXCHANGE_URL=
+
+# Horizon organization ID (main realm for all nodes, service and users)
+E_HZN_ORG_ID=
+
+# Image registry address
+REGISTRY_ADDRESS=
+
+# Registry repo location for all images
+E_DOCKER_IMAGE_BASE=${REGISTRY_ADDRESS}/thinkmoscow2020
+
+# Lab service base properties
+E_SERVICE_NAME=hellothink
+E_SERVICE_VERSION=1.0.0
+
+# Horizon Exchange user credentials
+HORIZON_USER=
+HORIZON_TOKEN=
+HORIZON_USER_AUTH=${HORIZON_USER}:${HORIZON_TOKEN}
+
+# Image registry user credentials
+# (are equivalent to Horizon Exchange user credentials)
+# Just duplicate them here as well
+REGISTRY_USER=
+REGISTRY_TOKEN=
+
+# Edge node name and token for Horizon registration.
+HORIZON_NODE=
+HORIZON_NODE_TOKEN=
+HORIZON_NODE_AUTH=${HORIZON_NODE}:${HORIZON_NODE_TOKEN}
+
+# Node userinput variables
+# (will be used as env variables for running edge service)
+MQTT_BROKER_URI=
+USER_EMAIL=
