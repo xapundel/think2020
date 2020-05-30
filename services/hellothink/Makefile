@@ -10,7 +10,10 @@ export ARCH ?= $(shell hzn architecture)
 export MATCH:='[hellothink] Service was started'
 export TIME_OUT:=60
 
-cert_dir:= ~/.docker/certs.d/test
+NODE_USERINPUT_FILE_TEMPLATE=../../node.userinput.json.tmpl
+NODE_USERINPUT_FILE=../../node.userinput.json
+
+cert_dir:= ~/.docker/certs.d/$(REGISTRY_ADDRESS)
 
 add-docker-reg-cert:
 	-@mkdir -p $(cert_dir)
@@ -61,14 +64,18 @@ register-node:
 		-o $(HZN_ORG_ID) \
 		-u $(HORIZON_USER_AUTH) \
 		-n $(HORIZON_NODE_AUTH) \
-		-p pattern-${SERVICE_NAME}-$(ARCH) \
-		-f ../../node.userinput.json
+		-p pattern-$(SERVICE_NAME)-$(ARCH) \
+		-f $(NODE_USERINPUT_FILE)
 
 unregister-node:
 	-@hzn unregister -f
 
 gen-service-keys:
 	-@hzn key create -f -i "$(HZN_ORG_ID)" "$(HORIZON_USER)"
+
+node-userinput:
+	-@envsubst < $(NODE_USERINPUT_FILE_TEMPLATE) > $(NODE_USERINPUT_FILE)
+	@echo "Horizon node userinput file created: $(NODE_USERINPUT_FILE)"
 
 clean:
 	-@docker rmi $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION) 2> /dev/null || :

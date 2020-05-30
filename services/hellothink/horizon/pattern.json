@@ -1,7 +1,7 @@
 {
     "name": "pattern-${SERVICE_NAME}-$ARCH",
-    "label": "Think Moscow services pattern for $ARCH",
-    "description": "Think Moscow services pattern for $ARCH",
+    "label": "Think Moscow services pattern for $ARCH -- USER=${HORIZON_USER}",
+    "description": "Think Moscow services pattern for $ARCH -- USER=${HORIZON_USER}",
     "public": false,
     "services": [
         {
