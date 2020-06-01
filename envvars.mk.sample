@@ -35,4 +35,3 @@ HORIZON_NODE_AUTH=${HORIZON_NODE}:${HORIZON_NODE_TOKEN}
 # Node userinput variables
 # (will be used as env variables for running edge service)
 MQTT_BROKER_URI=
-USER_EMAIL=

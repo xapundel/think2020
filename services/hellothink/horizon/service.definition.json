@@ -9,12 +9,20 @@
     "arch": "$ARCH",
     "sharable": "singleton",
     "requiredServices": [],
-    "userInput": [],
+    "userInput": [
+        {
+            "name": "MQTT_BROKER_URI",
+            "label": "MQTT broker instance for messaging",
+            "type": "string",
+            "defaultValue": ""
+          }
+    ],
     "deployment": {
         "services": {
             "hellothink": {
                 "image": "${DOCKER_IMAGE_BASE}:$SERVICE_VERSION",
-                "privileged": false
+                "privileged": false,
+                "command": ["${SERVICE_NAME}"]
             }
         }
     }

@@ -52,7 +52,7 @@ docker-login:
 	-@echo $(REGISTRY_TOKEN) | docker login $(REGISTRY_ADDRESS) -u $(REGISTRY_USER) --password-stdin
 
 build:
-	-@docker build -t $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION) -f ./Dockerfile .
+	make -C services/$(E_SERVICE_NAME) build
 
 push:
 	-@docker push $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION)
@@ -67,6 +67,14 @@ test: build
 		{ hzn dev service stop; \
 		echo "*** Service test failed! ***"; \
 		false; }
+
+create-node:
+	-@hzn exchange node create \
+		-o $(HZN_ORG_ID) \
+		-u $(HORIZON_USER_AUTH) \
+		-n $(HORIZON_NODE_AUTH) \
+		-a $(ARCH) \
+		-m $(HORIZON_NODE)
 
 publish-service:
 	-@hzn exchange service publish \
@@ -85,7 +93,7 @@ publish-pattern:
 		-u $(HORIZON_USER_AUTH) \
 		-f services/$(E_SERVICE_NAME)/horizon/pattern.json
 
-publish: publish-service publish-pattern
+publish: publish-service publish-pattern create-node
 
 get-exchange-service:
 	-hzn exchange service list \
