@@ -304,7 +304,7 @@ To unregister device run the following command:
 make unregister-node
 ```
 
-Then run cleanup script to delete docker image:
+Then run cleanup script to remove Docker images from local machine, Horizon Exchange node, pattern and service, created during the above steps:
 
 ```bash
 make clean

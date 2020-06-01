@@ -133,8 +133,27 @@ update-horizon-cfg: verify-horizon-cfg-dir
 verify-horizon-cfg-dir:
 	-@if [[ ! -d "$(HORIZON_CFG_FILE_DIR)" ]]; then mkdir -p $(HORIZON_CFG_FILE_DIR); fi
 
-clean:
+
+clean: clean-docker-img clean-hzn-services clean-hzn-patterns clean-hzn-nodes
+	-@echo "Success. Exchange node, services and patterns and local Docker images were removed."
+
+clean-docker-img:
 	-@docker rmi $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION) 2> /dev/null || :
+clean-hzn-services:
+	-@hzn exchange service remove -f \
+		-o $(HZN_ORG_ID) \
+		-u $(HORIZON_USER_AUTH) \
+		$(SERVICE_NAME)_$(SERVICE_VERSION)_$(ARCH) || :
+clean-hzn-patterns:
+	-@hzn exchange pattern remove -f \
+		-o $(HZN_ORG_ID) \
+		-u $(HORIZON_USER_AUTH) \
+		pattern-$(SERVICE_NAME)-$(ARCH) || :
+clean-hzn-nodes:
+	-@hzn exchange node remove -f \
+		-o $(HZN_ORG_ID) \
+		-u $(HORIZON_USER_AUTH) \
+		$(HORIZON_NODE) || :
 
 # This imports the variables from horizon/hzn.cfg. You can ignore these lines, but do not remove them.
 services/$(E_SERVICE_NAME)/horizon/.hzn.json.tmp.mk: services/$(E_SERVICE_NAME)/horizon/hzn.json
