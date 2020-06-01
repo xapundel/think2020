@@ -52,16 +52,40 @@ unzip master.zip
 cd think2020-master
 ```
 
-### Put your credentials into environment variables config
+### Obtaining your lab user credentials
 
-You can see `envvars.mk.sample` file with some environment properties, required for lab scripts execution.
+To help you with finding your progress during making these scripts for edge configuration & deployment, and to start with test user credentials for lab completion, you should visit a simple helper UI page ([link on the helper UI]()) and click on `Obtain token` button.
 
-Create a copy of it named `envvars.mk` and put your user credentials into there.
+You can then see obtained user ID in place of button you clicked, and this user ID is also showing in the right-top corner of the helper UI page.
+
+By clicking on `Copy credentials` button you can make a clipboard copy of your credentials in format:
+
+```
+<user_id>:<token>
+```
+
+Let's go to the next section and populate configuration file with some variable for your environment, including user credentials.
+
+Do not disturb about closing the Welcome page - your credentials are reserved for you after obtaining, and you are able to copy them in the next section.
+
+### Populating environment variables config
+
+In your lab working directory you can see `envvars.mk.sample` file with some environment properties, required for lab scripts execution.
+
+Create a copy of it named `envvars.mk`.
 
 ```bash
 cp envvars.mk.sample envvars.mk
 # then edit envvars.mk file and put missing data
 ```
+
+Now make a clipboard copy of your user credentials from Welcome page by clicking on `Copy credentials` button there.
+
+Place these credentials in envvars.mk file, considering that:
+
+- `HORIZON_USER` and `HORIZON_TOKEN` -- Horizon access credentials, and respectively your user ID and token you copied just now.
+- `REGISTRY_USER` and `REGISTRY_TOKEN` -- Docker image registry credentials, for this lab you should point the same user ID and token as above.
+- `HORIZON_NODE` and `HORIZON_NODE_TOKEN` -- Your edge node specific credentials, just come up with some kind of your node ID and node token to register it in Exchange.
 
 This set of variables is enough for all operations below, so you can continue to prepare you device.
 
