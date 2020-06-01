@@ -312,7 +312,8 @@ make clean
 
 ### How to get a completion certificate
 
---- TBD
+To get the certificate please go to the UI: Link, 
+find you edge device registered, check if service is up and running and print certificate!
 
 ### Useful links
 
