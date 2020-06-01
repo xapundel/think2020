@@ -31,6 +31,7 @@ NODE_USERINPUT_FILE=node.userinput.json
 
 HORIZON_CFG_FILE_TEMPLATE=horizon.cfg
 HORIZON_CFG_FILE=/etc/default/horizon
+HORIZON_CFG_FILE_DIR=$(shell dirname $(HORIZON_CFG_FILE))
 
 cert_dir :=
 ifeq ($(OSFLAG),MACOS)
@@ -125,9 +126,12 @@ node-userinput:
 	-@envsubst < $(NODE_USERINPUT_FILE_TEMPLATE) > $(NODE_USERINPUT_FILE)
 	@echo "Horizon node userinput file created: $(NODE_USERINPUT_FILE)"
 
-update-horizon-cfg:
+update-horizon-cfg: verify-horizon-cfg-dir
 	-@envsubst < $(HORIZON_CFG_FILE_TEMPLATE) > $(HORIZON_CFG_FILE)
 	@echo "Horizon config file updated. Restart Horizon agent to apply new settings."
+
+verify-horizon-cfg-dir:
+	-@if [[ ! -d "$(HORIZON_CFG_FILE_DIR)" ]]; then mkdir -p $(HORIZON_CFG_FILE_DIR); fi
 
 clean:
 	-@docker rmi $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION) 2> /dev/null || :

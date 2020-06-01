@@ -118,16 +118,16 @@ For using your machine as edge device you should install Horizon agent package a
     sudo installer -pkg "horizon-cli.pkg" -target /
     ```
 
-1. Prepare the new default configuration file for Horizon agent by invoking Makefile script:
+1. Prepare the new default configuration file for Horizon agent by invoking Makefile script (requires sudo permissions):
 
     ```bash
-    make update-horizon-cfg
+    sudo make update-horizon-cfg
     ```
 
-1. Launch the Horizon agent container:
+1. Launch the Horizon agent container with newly updated Horizon config:
 
     ```bash
-    horizon-container start
+    horizon-container start 1 /etc/default/horizon
     ```
 
 General step for all ways of installation to verify it was successful and Horizon agent is running is in retrieving general node information:
@@ -180,7 +180,7 @@ It's time to pass it to Docker **certs.d** folder. To do that with proper regist
 make REGISTRY_CERT=<path_to_registry_cert_file> add-docker-reg-cert
 ```
 
-On Mac, you then have to restart Docker daemon for changes to take effect. You can use use toolbar Docker Desktop icon menu `-> Restart`.
+On Mac, you then have to restart Docker daemon for changes to take effect. You can use toolbar Docker Desktop icon menu `-> Restart`.
 
 <img alt="Restart Docker on Mac" src="doc/img/restart-docker-on-mac.jpg" height="320">
 
