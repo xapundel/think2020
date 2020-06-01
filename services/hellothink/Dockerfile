@@ -2,9 +2,7 @@ FROM alpine:latest
 
 RUN apk add --no-cache mosquitto mosquitto-clients
 
-WORKDIR /
+COPY makehello.sh /root/
+RUN chmod +x /root/makehello.sh
 
-COPY makehello.sh /
-RUN chmod +x ./makehello.sh
-
-CMD ./makehello.sh
+ENTRYPOINT ["/root/makehello.sh"]
