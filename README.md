@@ -296,9 +296,19 @@ Here `lab_user_1.hellothink` is the name of your service, including user ID, so 
 
 --- TBD
 
-### Cleanup ???
+### Cleanup
 
---- TBD
+To unregister device run the following command:
+
+```bash
+make unregister-node
+```
+
+Then run cleanup script to delete docker image:
+
+```bash
+make clean
+```
 
 ### How to get a completion certificate
 
