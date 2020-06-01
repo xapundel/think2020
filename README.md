@@ -109,9 +109,11 @@ For using your machine as edge device you should install Horizon agent package a
 
 #### Mac OS installation
 
-1. Download horizon-cli package from Horizon repository and install it by using Mac OS Installer tool:
+1. Download horizon-cli package and its trust certificate from Horizon repository and install it by using Mac OS Installer tool:
 
     ```bash
+    wget -q http://pkg.bluehorizon.network/macos/certs/horizon-cli.crt
+    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain horizon-cli.crt
     wget -qO horizon-cli.pkg http://pkg.bluehorizon.network/macos/horizon-cli-2.24.18.pkg
     sudo installer -pkg "horizon-cli.pkg" -target /
     ```
