@@ -9,6 +9,16 @@ E_HZN_ORG_ID=
 # Image registry address
 REGISTRY_ADDRESS=
 
+# Horizon machine CA certificate local path
+# (e.g. /Users/test/think2020/ca.crt)
+# NOTE: you can obtain this certificate in archive using link in helper UI
+HORIZON_MACHINE_CA_CERT=
+
+# Image registry certificate local path
+# (e.g. /Users/test/think2020/registry.crt)
+# NOTE: you can obtain this certificate in archive using link in helper UI
+REGISTRY_CERT=
+
 # Registry repo location for all images
 E_DOCKER_IMAGE_BASE=${REGISTRY_ADDRESS}/thinkmoscow2020
 

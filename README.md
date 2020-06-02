@@ -1,72 +1,46 @@
-# think2020
+# Code @ Think - Edge Computing workshop lab
 
-## Preparation & Horizon agent installation
+_some introduction here_ ...
 
-### Prerequisites
+---
 
-Before you begin to install and use Horizon on your machine, make sure you have the following software / utils installed:
+### Before you begin
 
-- `make`  
-  Make utility should be already installed on most of platforms, but if you haven't it, here are the platform ways to install it:
-  - <ins>For Mac OS:</ins> Install XCode Command Line Tools: `xcode-select --install`
-  - <ins>For Linux (Ubuntu):</ins> `sudo apt install build-essential`
+First you need to install some software and make pre-configuration of your environment. Make sure you have passed [Preparation & pre-installation guide](Preparation.md) for that.
 
-- `curl`  
-  - <ins>For Mac OS:</ins> `brew install curl`
-  - <ins>For Linux (Ubuntu):</ins> `sudo apt install curl`
+### Obtaining lab server certificates
 
-- Docker CE  
-  Use the links below for Docker installation on your platform
+Some services like your machine Docker and edge service you will deploy are using lab server certificates for their connections.
 
-  - <ins>For Mac OS:</ins> Visit [Docker CE Desktop Edition for Mac OS at Docker Hub](https://hub.docker.com/editions/community/docker-ce-desktop-mac) and click on **Get Docker Desktop for Mac (Stable)** button there.
+To download these certificates to you machine you should go 
+to helper UI and click on `Download server certificates` link.
 
-  - <ins>For Linux:</ins> Evaluate the following in your terminal:
+<img alt="Download server certificates" src="doc/img/download-server-certs.jpg" width="240">
 
-    ```bash
-    curl -fsSL https://get.docker.com/ | sh
-    ```
+Contents is an archive file the following cert files:
 
-  - Check that Docker was installed and running by using the following command:
+- `registry.crt` -- for Docker to connect to image registry
+- `ca.crt` -- for edge service to connect lab server machine
 
-    ```bash
-    docker --version
-    ```
-
-- `socat`  
-  If you are on Mac OS, you also need to install Socat package (to be able to run Horizon agent in container) from Mac App Store using the link below (Homebrew).
-  - <ins>For Mac OS:</ins> [http://macappstore.org/socat/](http://macappstore.org/socat/)
-
-### Downloading sources
-
-You can clone this repository to your machine by running:
-
-```bash
-git clone https://github.com/xapundel/think2020.git
-```
-
-or simply download ZIP archive with repo files and unpack it:
-
-```bash
-wget -q https://github.com/xapundel/think2020/archive/master.zip
-unzip master.zip
-cd think2020-master
-```
+Unzip this file to anywhere on your machine, but remember the paths to certs - we will use them to configure our environment later.
 
 ### Obtaining your lab user credentials
 
-To help you with finding your progress during making these scripts for edge configuration & deployment, and to start with test user credentials for lab completion, you should visit a simple helper UI page ([link on the helper UI]()) and click on `Obtain token` button.
+To help you with finding your progress during making these scripts for edge configuration & deployment, and to start with test user credentials for lab completion, you should visit helper UI welcome page ([link on the helper UI]()) and click on `Obtain token` button.
 
 You can then see obtained user ID in place of button you clicked, and this user ID is also showing in the right-top corner of the helper UI page.
 
-By clicking on `Copy credentials` button you can make a clipboard copy of your credentials in format:
+By clicking on `Copy credentials` button you can make a clipboard copy of your credentials in format like they are presented in credentials block in helper UI:
 
 ```
 <user_id>:<token>
 ```
 
-Let's go to the next section and populate configuration file with some variable for your environment, including user credentials.
+<img alt="Copy credentials" src="doc/img/copy-credentials.jpg" width="240">
 
-Do not disturb about closing the Welcome page - your credentials are reserved for you after obtaining, and you are able to copy them in the next section.
+Let's go to the next section and populate configuration file with some variable for your environment, including user credentials and server certificates paths.
+
+Do not disturb about closing helper UI welcome page - your credentials are reserved for you after obtaining, and you are able to copy them in the next section.
 
 ### Populating environment variables config
 
@@ -79,129 +53,27 @@ cp envvars.mk.sample envvars.mk
 # then edit envvars.mk file and put missing data
 ```
 
-Now make a clipboard copy of your user credentials from Welcome page by clicking on `Copy credentials` button there.
+Now make a clipboard copy of your user credentials from welcome page by clicking on `Copy credentials` button there (see [Obtaining your lab user credentials](#obtaining-your-lab-user-credentials))
 
 Place these credentials in envvars.mk file, considering that:
 
 - `HORIZON_USER` and `HORIZON_TOKEN` -- Horizon access credentials, and respectively your user ID and token you copied just now.
 - `REGISTRY_USER` and `REGISTRY_TOKEN` -- Docker image registry credentials, for this lab you should point the same user ID and token as above.
 - `HORIZON_NODE` and `HORIZON_NODE_TOKEN` -- Your edge node specific credentials, just come up with some kind of your node ID and node token to register it in Exchange.
+- `HORIZON_MACHINE_CA_CERT` and `REGISTRY_CERT` -- absolute paths on your machine to `ca.crt` and `registry.crt` files you've downloaded previously at [Obtaining lab server certificates](#obtaining-lab-server-certificates)
 
 This set of variables is enough for all operations below, so you can continue to prepare you device.
-
-### Install Horizon agent on your device
-
-For using your machine as edge device you should install Horizon agent package and Horizon CLI instruments. Below you can see the instructions for doing that [on Linux machine](#linux-installation) and [on Mac](#mac-os-installation).
-
-#### Linux installation
-
-1. Add Horizon packages repository (example for Ubuntu Bionic 18.04):
-
-    ```bash
-    wget -qO - http://pkg.bluehorizon.network/bluehorizon.network-public.key | sudo apt-key add -
-    sudo add-apt-repository 'deb [arch=amd64] http://pkg.bluehorizon.network/linux/ubuntu bionic-updates main'
-    sudo add-apt-repository 'deb-src [arch=amd64] http://pkg.bluehorizon.network/linux/ubuntu bionic-updates main'
-    ```
-
-1. Install packages on machine:
-
-    ```bash
-    sudo apt update
-    sudo apt install bluehorizon horizon-cli horizon
-    ```
-
-1. After Horizon agent installed, make a stop for it:
-
-    ```bash
-    sudo systemctl stop horizon
-    systemctl status horizon
-    ```
-
-1. Prepare the new default configuration file for Horizon agent by invoking Makefile script:
-
-    ```bash
-    make update-horizon-cfg
-    ```
-
-    Config file updated by this command is `/etc/default/horizon`
-
-1. Start Horizon service again:
-
-    ```bash
-    sudo systemctl start horizon
-    ```
-
-#### Mac OS installation
-
-1. Download horizon-cli package and its trust certificate from Horizon repository and install it by using Mac OS Installer tool:
-
-    ```bash
-    wget -q http://pkg.bluehorizon.network/macos/certs/horizon-cli.crt
-    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain horizon-cli.crt
-    wget -qO horizon-cli.pkg http://pkg.bluehorizon.network/macos/horizon-cli-2.24.18.pkg
-    sudo installer -pkg "horizon-cli.pkg" -target /
-    ```
-
-1. Prepare the new default configuration file for Horizon agent by invoking Makefile script (requires sudo permissions):
-
-    ```bash
-    sudo make update-horizon-cfg
-    ```
-
-1. Launch the Horizon agent container with newly updated Horizon config:
-
-    ```bash
-    horizon-container start 1 /etc/default/horizon
-    ```
-
-General step for all ways of installation to verify it was successful and Horizon agent is running is in retrieving general node information:
-
-```bash
-hzn node list
-```
-
-You should see something like this in the output:
-
-```json
-{
-  "id": "<HORIZON_NODE>",
-  "organization": null,
-  "pattern": null,
-  "name": null,
-  "token_last_valid_time": "",
-  "token_valid": null,
-  "ha": null,
-  "configstate": {
-    "state": "unconfigured",
-    "last_update_time": ""
-  },
-  "configuration": {
-    "exchange_api": "<HZN_EXCHANGE_URL>",
-    "exchange_version": "2.28.0",
-    "required_minimum_exchange_version": "2.11.1",
-    "preferred_exchange_version": "2.11.1",
-    "mms_api": "",
-    "architecture": "amd64",
-    "horizon_version": "2.24.18"
-  },
-  "connectivity": {
-    "firmware.bluehorizon.network": true,
-    "images.bluehorizon.network": true
-  }
-}
-```
 
 ### Setup Docker environment to work with images registry
 
 Since there is a private registry raised for the Docker images that users will publish to there and run as edge services, we also need to provide registry cert for Docker to make it available to push images in that registry.
 
-Download the registry cert to your machine using the link below:
-[Link to download registry cert]()
+If you haven't yet downloaded `registry.crt` file, pass the [Obtaining lab server certificates](#obtaining-lab-server-certificates) and then [Populating environment variables config](#populating-environment-variables-config) sections above.
 
-It's time to pass it to Docker **certs.d** folder. To do that with proper registry host bind, run the following command, with replacing `path_to_registry_cert_file` to your actual downloaded cert location.
+It's time to pass registry cert to Docker **certs.d** folder. To do that with proper registry host bind, run the following command:
 
 ```bash
-make REGISTRY_CERT=<path_to_registry_cert_file> add-docker-reg-cert
+make add-docker-reg-cert
 ```
 
 On Mac, you then have to restart Docker daemon for changes to take effect. You can use toolbar Docker Desktop icon menu `-> Restart`.
@@ -260,7 +132,19 @@ make get-exchange-pattern
 
 ### Node registration
 
-It's time to make our node Horizon agent do real job for us. But before we register our edge node, let's prepare node userinput file with some environment variables, useful for future service. You could see these variable in the bottom section of `envvars.mk` file.
+It's time to make our node Horizon agent do real job for us.
+
+At first, it is useful to create your node definition at Horizon Exchange to make it visible for our next configuration.
+
+```bash
+make create-node
+```
+
+You are now able to see you node in the helper UI, by clicking on `Show registered edge nodes` button at welcome page. It's status is **Unconfigured** so far, and we define the pattern for it when make it registered.
+
+<img alt="Registered nodes" src="doc/img/registered-nodes-view.jpg">
+
+But before we register our edge node, let's prepare node userinput file with some environment variables, useful for future service. You could see these variable in the bottom section of `envvars.mk` file.
 
 The script below generates `node.userinput.json` file which will be used in the node registration process to pass all that we need for our services from the edge node environment.
 
@@ -275,6 +159,10 @@ Run node registration command:
 ```bash
 make register-node
 ```
+
+Now you'are able to see in helper UI Registered edge nodes page that your node is `Configured` and has deployment pattern.
+
+Since this moment, you Horizon agent is trying to obtain a new agreement for workload defined in deployment pattern (`hellothink` service), checking Docker images for that and finally starting Docker container with your edge service on your machine.
 
 ### Proccess monitoring
 

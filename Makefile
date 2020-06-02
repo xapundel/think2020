@@ -52,7 +52,10 @@ add-docker-reg-cert:
 docker-login:
 	-@echo $(REGISTRY_TOKEN) | docker login $(REGISTRY_ADDRESS) -u $(REGISTRY_USER) --password-stdin
 
-build:
+copy-server-crt:
+	-@make -C services/$(E_SERVICE_NAME) copy-server-crt
+
+build: copy-server-crt
 	make -C services/$(E_SERVICE_NAME) build
 
 push:
@@ -94,7 +97,7 @@ publish-pattern:
 		-u $(HORIZON_USER_AUTH) \
 		-f services/$(E_SERVICE_NAME)/horizon/pattern.json
 
-publish: publish-service publish-pattern create-node
+publish: publish-service publish-pattern
 
 get-exchange-service:
 	-hzn exchange service list \
@@ -133,22 +136,24 @@ update-horizon-cfg: verify-horizon-cfg-dir
 verify-horizon-cfg-dir:
 	-@if [[ ! -d "$(HORIZON_CFG_FILE_DIR)" ]]; then mkdir -p $(HORIZON_CFG_FILE_DIR); fi
 
-
 clean: clean-docker-img clean-hzn-services clean-hzn-patterns clean-hzn-nodes
 	-@echo "Success. Exchange node, services and patterns and local Docker images were removed."
 
 clean-docker-img:
 	-@docker rmi $(DOCKER_IMAGE_BASE):$(SERVICE_VERSION) 2> /dev/null || :
+
 clean-hzn-services:
 	-@hzn exchange service remove -f \
 		-o $(HZN_ORG_ID) \
 		-u $(HORIZON_USER_AUTH) \
 		$(SERVICE_NAME)_$(SERVICE_VERSION)_$(ARCH) || :
+
 clean-hzn-patterns:
 	-@hzn exchange pattern remove -f \
 		-o $(HZN_ORG_ID) \
 		-u $(HORIZON_USER_AUTH) \
 		pattern-$(SERVICE_NAME)-$(ARCH) || :
+
 clean-hzn-nodes:
 	-@hzn exchange node remove -f \
 		-o $(HZN_ORG_ID) \
