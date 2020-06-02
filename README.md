@@ -58,7 +58,6 @@ Now make a clipboard copy of your user credentials from welcome page by clicking
 Place these credentials in envvars.mk file, considering that:
 
 - `HORIZON_USER` and `HORIZON_TOKEN` -- Horizon access credentials, and respectively your user ID and token you copied just now.
-- `REGISTRY_USER` and `REGISTRY_TOKEN` -- Docker image registry credentials, for this lab you should point the same user ID and token as above.
 - `HORIZON_NODE` and `HORIZON_NODE_TOKEN` -- Your edge node specific credentials, just come up with some kind of your node ID and node token to register it in Exchange.
 - `HORIZON_MACHINE_CA_CERT` and `REGISTRY_CERT` -- absolute paths on your machine to `ca.crt` and `registry.crt` files you've downloaded previously at [Obtaining lab server certificates](#obtaining-lab-server-certificates)
 
@@ -82,11 +81,15 @@ On Mac, you then have to restart Docker daemon for changes to take effect. You c
 
 On Linux, you do not need to restart Docker daemon - it is already put into target **/etc/docker/certs.d** directory.
 
-Final step here is registry authorization. Perform the following command to login your Docker with registry user credentials (`REGISTRY_USER` and `REGISTRY_TOKEN` in `envvars.mk`):
+Final step here is registry authorization. Perform the command below to login your Docker with registry user credentials.
+
+> WARNING: Your Docker will switch auth context to lab server private registry since you will do the command below. If you have been logged in anywhere before, and you wish to rollback to previous registry / Docker Hub after lab completion - run `docker login <previous_registry>` command manually by yourself.
 
 ```bash
 make docker-login
 ```
+
+> NOTE: `REGISTRY_USER` and `REGISTRY_TOKEN` for registry authorization are defined in `envvars.mk` and referred to your Horizon user credentials - they are equivalent to each other in this lab.
 
 Now you can build your first edge service and publish its image to registry.
 
@@ -120,14 +123,93 @@ Let's make our `hellothink` service and pattern publication at Horizon Exchange 
 make publish
 ```
 
-You can easily verify that your service and pattern were publiushed appropriately by calling the commands below:
+You can easily verify that your service and pattern were publiushed appropriately by calling the commands below.
 
 ```bash
 make get-exchange-service
 ```
 
+outputs:
+
+```bash
+hzn exchange service list \
+                -o thinkmoscow \
+                -u test_user:12345678 \
+                test_user.hellothink_1.0.0_amd64
+{
+  "thinkmoscow/test_user.hellothink_1.0.0_amd64": {
+    "owner": "thinkmoscow/test_user",
+    "label": "test_user.hellothink for amd64",
+    "description": "",
+    "documentation": "",
+    "public": true,
+    "url": "test_user.hellothink",
+    "version": "1.0.0",
+    "arch": "amd64",
+    "sharable": "singleton",
+    "matchHardware": {},
+    "requiredServices": [],
+    "userInput": [
+      {
+        "name": "MQTT_BROKER_URI",
+        "label": "MQTT broker instance for messaging",
+        "type": "string",
+        "defaultValue": ""
+      }
+    ],
+    "deployment": "{\"services\":{\"hellothink\":{\"command\":[\"test_user.hellothink\"],\"image\":\"169.168.100.1:443/thinkmoscow2020/test_user.hellothink:1.0.0\",\"privileged\":false}}}",
+    "deploymentSignature": "Y2xXeVXUGIFTloXwdWAw+hYcNDYhO+RrSY0T9Z5ijrMMuTBQfeEiR89QT7/M6utEN2IUeFVTGe9hlO2eeWWGHSQNgeIvjKo2/fxSb5wowf+MOh5olsZ6y0iRrn+MWGhYECA8epfWN0D8p3Rsd7V0NcvdxAO/u9Q8pWqS39azincgnlvxcF+OASI5NmazcOew4lT1JFrlHRhLFRLmGATbnmRj5SlF+hWPMxUvM0IungW/vK6Vwiujq4EDqINwoVWHUpeN7QYi1waOashfrk2hIgtPDoBh4tOcqpfo9t8t7F0MKguWOE+huly741qQzcmuOoRifPPg044eMtBR7qCkc2+UHTZ8X4MUcfoL8U39MgDwZ7SYEnlRvVP63dsA9f4B8LhfP6oYCkNHLq33tVUupwQPDUfZ9XQy/Om8PrBSMDihx0Fo5ZNk9704gy2LT0hvzV6pGZVSOtoOwBNHeK6Iaw4l8zP7NaATBn9D3L3ps2o0SolbZV6zJWP+TyhJKjyTLDIaLPONMFqhy/ynqjELfDISGdvxh+58Mga9IimTSx2yeUpl2Qmh3jlrL5QWEAta9OqkWm//zNDnR6CnUzqckV1RwK7oyirpWt8GAm3tdXK8xuH2bIBBn52wndA/VcyzOoZ5MmRmKrz+tcP3RPRkyzVtZi72kxGJr+dho2ffUDc=",
+    "lastUpdated": "2020-06-02T15:51:14.728Z[UTC]"
+  }
+}
+```
+
 ```bash
 make get-exchange-pattern
+```
+
+outputs:
+
+```bash
+hzn exchange pattern list \
+                -o thinkmoscow \
+                -u test_user:12345678 \
+                pattern-test_user.hellothink-amd64
+{
+  "thinkmoscow/pattern-test_user.hellothink-amd64": {
+    "owner": "thinkmoscow/test_user",
+    "label": "Think Moscow services pattern for amd64 -- USER=test_user",
+    "description": "Think Moscow services pattern for amd64 -- USER=test_user",
+    "public": false,
+    "services": [
+      {
+        "serviceUrl": "test_user.hellothink",
+        "serviceOrgid": "thinkmoscow",
+        "serviceArch": "amd64",
+        "serviceVersions": [
+          {
+            "version": "1.0.0",
+            "priority": {},
+            "upgradePolicy": {}
+          }
+        ],
+        "dataVerification": {
+          "metering": {}
+        },
+        "nodeHealth": {
+          "missing_heartbeat_interval": 1800,
+          "check_agreement_status": 1800
+        }
+      }
+    ],
+    "agreementProtocols": [
+      {
+        "name": "Basic"
+      }
+    ],
+    "lastUpdated": "2020-06-02T15:51:15.206Z[UTC]"
+  }
+}
 ```
 
 ### Node registration
@@ -176,10 +258,52 @@ This command starts a 2s-period monitor of agreements list API output:
 watch hzn agreement list
 ```
 
+> NOTE: If you don't have watch tool on your device, install it using `brew install watch` on Mac OS or `sudo apt install watch` on Ubuntu/Debian.
+
+Agreement processing is not instant and consists of from agreement creation, agent acceptance, service resources preparation and container starting process in the end.
+
+The output for finalized agreement with running service state (`agreement_execution_start_time` populated) should be like below:
+```
+[
+  {
+    "name": "pattern-test_user.hellothink-amd64_test_user.hellothink_thinkmoscow_amd64 merged with pattern-test_user.hellothink-amd64_test_user.hellothink_thinkmoscow_amd64",
+    "current_agreement_id": "5930d54d7992e5793bad9d880e9e080533d48612b07fc448bbefa33365efe947",
+    "consumer_id": "thinkmoscow/thinkagbot",
+    "agreement_creation_time": "2020-06-02 18:51:50 +0300 MSK",
+    "agreement_accepted_time": "2020-06-02 18:52:00 +0300 MSK",
+    "agreement_finalized_time": "2020-06-02 18:52:00 +0300 MSK",
+    "agreement_execution_start_time": "2020-06-02 18:52:02 +0300 MSK",
+    "agreement_data_received_time": "",
+    "agreement_protocol": "Basic",
+    "workload_to_run": {
+      "url": "test_user.hellothink",
+      "org": "thinkmoscow",
+      "version": "1.0.0",
+      "arch": "amd64"
+    }
+  }
+]
+```
+
 In parallel, you can run this command for obtaining list of last 10 events:
 
 ```bash
 watch "hzn eventlog list | tail -n 10"
+```
+
+Here are the example log of events for Horizon agent, receiving by that command:
+
+```bash
+  "2020-06-02 18:51:38:   Start service auto configuration for thinkmoscow/test_user.hellothink.",
+  "2020-06-02 18:51:38:   Complete service auto configuration for thinkmoscow/test_user.hellothink.",
+  "2020-06-02 18:51:38:   Complete node configuration/registration for node thinkmoscow_test_user_node.",
+  "2020-06-02 18:51:49:   Node received Proposal message using agreement 5930d54d7992e5793bad9d880e9e080533d48612b07fc448bbefa33365efe947 for service thinkmoscow/test_user.hellothink from the agbot thinkmoscow/thinkagbot.",
+  "2020-06-02 18:52:00:   Agreement reached for service test_user.hellothink. The agreement id is 5930d54d7992e5793bad9d880e9e080533d48612b07fc448bbefa33365efe947.",
+  "2020-06-02 18:52:00:   Start dependent services for thinkmoscow/test_user.hellothink.",
+  "2020-06-02 18:52:00:   Start workload service for thinkmoscow/test_user.hellothink.",
+  "2020-06-02 18:52:01:   Image loaded for thinkmoscow/test_user.hellothink.",
+  "2020-06-02 18:52:02:   Workload service containers for thinkmoscow/test_user.hellothink are up and running."
+]
 ```
 
 Of course, since services are starting as Docker containers, you can invoke to see whether your service is already running:
@@ -193,16 +317,16 @@ To see service logs, you can perform one of the following commands according to 
 For Linux, run:
 
 ```bash
-sudo tail -f /var/log/syslog | grep lab_user_1.hellothink[[]
+sudo tail -f /var/log/syslog | grep hellothink[[]
 ```
 
 For Mac OS, run:
 
 ```bash
-sudo docker logs -f $(sudo docker ps -q --filter name=lab_user_1.hellothink)
+sudo docker logs -f $(sudo docker ps -q --filter name=l.hellothink)
 ```
 
-Here `lab_user_1.hellothink` is the name of your service, including user ID, so put there your actual Horizon user ID.
+Here `hellothink` is the name of your service.
 
 ### Summary
 

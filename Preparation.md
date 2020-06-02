@@ -50,6 +50,8 @@ unzip master.zip
 cd think2020-master
 ```
 
+> NOTE: If you don't have wget tool on your device, install it using `brew install wget` on Mac OS or `sudo apt install wget` on Ubuntu/Debian. You will also need it in the next steps.
+
 ## Installing Horizon agent on your device
 
 For using your machine as edge device you should install Horizon agent package and Horizon CLI instruments. Below you can see the instructions for doing that [on Linux machine](#linux-installation) and [on Mac](#mac-os-installation).
@@ -138,7 +140,7 @@ You should see something like this in the output:
 
 ```json
 {
-  "id": "<HORIZON_NODE>",
+  "id": "",
   "organization": null,
   "pattern": null,
   "name": null,

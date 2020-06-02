@@ -32,10 +32,9 @@ HORIZON_TOKEN=
 HORIZON_USER_AUTH=${HORIZON_USER}:${HORIZON_TOKEN}
 
 # Image registry user credentials
-# (are equivalent to Horizon Exchange user credentials)
-# Just duplicate them here as well
-REGISTRY_USER=
-REGISTRY_TOKEN=
+# (for lab environment they are equivalent to Horizon Exchange user credentials)
+REGISTRY_USER=${HORIZON_USER}
+REGISTRY_TOKEN=${HORIZON_TOKEN}
 
 # Edge node name and token for Horizon registration.
 HORIZON_NODE=
