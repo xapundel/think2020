@@ -6,9 +6,9 @@ And today you can register your laptop (or another device) to the edge cluster t
 
 In this workshop, you will explore the following capabilities:
 
-* 		Understand Open-Horizon
-* 		Learn how to add and configure edge nodes
-* 		Learn how to register a new edge services
+- Understand Open-Horizon
+- Learn how to add and configure edge nodes
+- Learn how to register a new edge services
 
 ---
 
