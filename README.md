@@ -337,7 +337,7 @@ Here `hellothink` is the name of your service.
 
 ### Summary
 
---- TBD
+So after completing this workshop you should be able to understand the main concepts of Edge computing and Open-Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
 
 ### Cleanup
 
