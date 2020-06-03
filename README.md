@@ -352,4 +352,9 @@ find you edge device registered, check if service is up and running and print ce
 
 ### Useful links
 
---- TBD
+Edge - Rob High - What is Edge? (october 2019) : https://youtu.be/cEOUeItHDdo
+
+Edge - Rob High - What Edge gives to different industries? (may 2020) : https://youtu.be/-ozeyxYu1ek 
+
+Edge - IBM Edge Application Manager (may 2020) : https://youtu.be/yeb6vX0NQpM
+
