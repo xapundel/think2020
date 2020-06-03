@@ -323,7 +323,7 @@ sudo tail -f /var/log/syslog | grep hellothink[[]
 For Mac OS, run:
 
 ```bash
-sudo docker logs -f $(sudo docker ps -q --filter name=l.hellothink)
+sudo docker logs -f $(sudo docker ps -q --filter name=hellothink)
 ```
 
 Here `hellothink` is the name of your service.
