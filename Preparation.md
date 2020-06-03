@@ -80,14 +80,14 @@ For using your machine as edge device you should install Horizon agent package a
     systemctl status horizon
     ```
 
-1. Go to lab working directory (`think2020-master` or as yu called it) and prepare the new default configuration file for Horizon agent by invoking Makefile script:
+1. Go to lab working directory (`think2020-master` or as you called it) and prepare the new default configuration file for Horizon agent by invoking Makefile script:
 
     ```bash
     cd <lab_workdir>
     make update-horizon-cfg
     ```
 
-    Config file updated by this command is `/etc/default/horizon`
+    This command updates config file `/etc/default/horizon`
 
 1. Start Horizon service again:
 
