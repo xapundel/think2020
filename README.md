@@ -69,9 +69,10 @@ Since there is a private registry raised for the Docker images that users will p
 
 If you haven't yet downloaded `registry.crt` file, pass the [Obtaining lab server certificates](#obtaining-lab-server-certificates) and then [Populating environment variables config](#populating-environment-variables-config) sections above.
 
-It's time to pass registry cert to Docker **certs.d** folder. To do that with proper registry host bind, run the following command:
+It's time to pass registry cert to Docker **certs.d** folder. To do that with proper registry host bind, run the following command from `<lab_workdir>`:
 
 ```bash
+cd <lab_workdir>
 make add-docker-reg-cert
 ```
 
@@ -82,8 +83,6 @@ On Mac, you then have to restart Docker daemon for changes to take effect. You c
 On Linux, you do not need to restart Docker daemon - it is already put into target **/etc/docker/certs.d** directory.
 
 Final step here is registry authorization. Perform the command below to login your Docker with registry user credentials.
-
-> WARNING: Your Docker will switch auth context to lab server private registry since you will do the command below. If you have been logged in anywhere before, and you wish to rollback to previous registry / Docker Hub after lab completion - run `docker login <previous_registry>` command manually by yourself.
 
 ```bash
 make docker-login
@@ -334,7 +333,7 @@ Here `hellothink` is the name of your service.
 
 ### Cleanup
 
-To unregister device run the following command:
+To unregister device node and stop all running services created by Horizon agent on it, run the following command:
 
 ```bash
 make unregister-node

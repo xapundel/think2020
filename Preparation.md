@@ -54,11 +54,11 @@ cd think2020-master
 
 ## Installing Horizon agent on your device
 
-For using your machine as edge device you should install Horizon agent package and Horizon CLI instruments. Below you can see the instructions for doing that [on Linux machine](#linux-installation) and [on Mac](#mac-os-installation).
+For using your machine as edge device you should install Horizon agent package and Horizon CLI instruments. Below you can see the instructions for doing that [on Linux machine](#linux-installation) and [on Mac](#mac-os-installation). List of supported OS versions for Linux packages [you can find here](https://github.com/open-horizon/horizon-deb-packager).
 
 #### Linux installation
 
-1. Add Horizon packages repository. You can choose your Linux OS version [from their repository](http://pkg.bluehorizon.network/linux) as well - this is an example for for Ubuntu Bionic 18.04.
+1. Add Horizon packages repository. You can choose your Linux OS version [from their repository](http://pkg.bluehorizon.network/linux) as well - this is an example for Ubuntu Bionic 18.04.
 
     ```bash
     wget -qO - http://pkg.bluehorizon.network/bluehorizon.network-public.key | sudo apt-key add -
@@ -80,9 +80,10 @@ For using your machine as edge device you should install Horizon agent package a
     systemctl status horizon
     ```
 
-1. Prepare the new default configuration file for Horizon agent by invoking Makefile script:
+1. Go to lab working directory (`think2020-master` or as yu called it) and prepare the new default configuration file for Horizon agent by invoking Makefile script:
 
     ```bash
+    cd <lab_workdir>
     make update-horizon-cfg
     ```
 
@@ -166,4 +167,3 @@ You should see something like this in the output:
   }
 }
 ```
-
