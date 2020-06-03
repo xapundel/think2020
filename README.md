@@ -1,6 +1,14 @@
 # Code @ Think - Edge Computing workshop lab
 
-_some introduction here_ ...
+With thousands of IoT devices placing compute and analytics closer to where data is created is making the case for edge computing.
+Edge computing is transforming the way data is being handled, processed, and delivered from/to the devices around the world. 
+And today you can register your laptop (or another device) to the edge cluster to see all features of Edge computing.
+
+In this workshop, you will explore the following capabilities:
+
+* 		Understand Open-Horizon
+* 		Learn how to add and configure edge nodes
+* 		Learn how to register a new edge services
 
 ---
 
