@@ -48,7 +48,7 @@ By clicking on `Copy credentials` button you can make a clipboard copy of your c
 
 Let's go to the next section and populate configuration file with some variable for your environment, including user credentials and server certificates paths.
 
-Now you can close helper UI welcome page - your credentials are reserved for you after obtaining, and you will be able to copy them in the next section.
+Your credentials are reserved for you after obtaining, and you will be able to copy them in the next section.
 
 ### Populating environment variables config
 
