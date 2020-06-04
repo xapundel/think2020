@@ -20,12 +20,11 @@ First you need to install some software and make pre-configuration of your envir
 
 Some services like your machine Docker and edge service you will deploy are using lab server certificates for their connections.
 
-To download these certificates to you machine you should go 
-to helper UI and click on `Download server certificates` link.
+To download these certificates go to helper UI and click on `Download server certificates` link.
 
 <img alt="Download server certificates" src="doc/img/download-server-certs.jpg" width="240">
 
-Contents is an archive file the following cert files:
+Archive file with certificates includes:
 
 - `registry.crt` -- for Docker to connect to image registry
 - `ca.crt` -- for edge service to connect lab server machine
@@ -34,7 +33,7 @@ Unzip this file to anywhere on your machine, but remember the paths to certs - w
 
 ### Obtaining your lab user credentials
 
-To help you with finding your progress during making these scripts for edge configuration & deployment, and to start with test user credentials for lab completion, you should visit helper UI welcome page ([link on the helper UI]()) and click on `Obtain token` button.
+To see the progress during workshop and get test user credentials visit helper UI welcome page ([link on the helper UI]()) and click on `Obtain token` button.
 
 You can then see obtained user ID in place of button you clicked, and this user ID is also showing in the right-top corner of the helper UI page.
 
@@ -73,7 +72,7 @@ This set of variables is enough for all operations below, so you can continue to
 
 ### Setup Docker environment to work with images registry
 
-Since there is a private registry raised for the Docker images that users will publish to there and run as edge services, we also need to provide registry cert for Docker to make it available to push images in that registry.
+Since there is a private registry raised for the Docker images that users will publish to there and run as edge services, we also need to provide registry cert for Docker to make it able to push images in that registry.
 
 If you haven't yet downloaded `registry.crt` file, pass the [Obtaining lab server certificates](#obtaining-lab-server-certificates) and then [Populating environment variables config](#populating-environment-variables-config) sections above.
 
@@ -223,7 +222,7 @@ hzn exchange pattern list \
 
 It's time to make our node Horizon agent do real job for us.
 
-At first, it is useful to create your node definition at Horizon Exchange to make it visible for our next configuration.
+At first, create your node definition at Horizon Exchange to make it visible for our next configuration.
 
 ```bash
 make create-node
@@ -255,7 +254,7 @@ Since this moment, you Horizon agent is trying to obtain a new agreement for wor
 
 ### Proccess monitoring
 
-Commands below are optional, but can help with understanding that our Horizon agent is processing agreements and executing services deployment.
+Commands below are optional, but can help to understand the Horizon agent behaviour.
 
 Good way to monitor agreements & events our agent has for service deployments is to use `hzn` CLI command.
 
@@ -313,11 +312,7 @@ Here are the example log of events for Horizon agent, receiving by that command:
 ]
 ```
 
-Of course, since services are starting as Docker containers, you can invoke to see whether your service is already running:
-
-```bash
-docker ps
-```
+Of course, since services are starting as Docker containers, you can invoke `docker ps` command to see whether your service is already running.
 
 To see service logs, you can perform one of the following commands according to your platform.
 
