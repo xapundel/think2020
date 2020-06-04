@@ -6,7 +6,7 @@ And today you can register your laptop (or another device) to the edge cluster t
 
 In this workshop, you will explore the following capabilities:
 
-- Understand Open-Horizon
+- Understand Open Horizon
 - Learn how to add and configure edge nodes
 - Learn how to register a new edge services
 
@@ -337,7 +337,7 @@ Here `hellothink` is the name of your service.
 
 ### Summary
 
-So after completing this workshop you should be able to understand the main concepts of Edge computing and Open-Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
+So after completing this workshop you should be able to understand the main concepts of Edge computing and Open Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
 
 ### Cleanup
 
