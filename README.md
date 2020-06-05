@@ -1,14 +1,21 @@
-# Code @ Think - Edge Computing workshop lab
+# Code ⇄ Think - Edge Computing workshop lab
 
-With thousands of IoT devices placing compute and analytics closer to where data is created makes the case for edge computing.
-Edge computing is transforming the way data is being handled, processed, and delivered from/to the devices around the world. 
+With thousands of IoT devices placing compute and analytics closer to where data is created is making the case for edge computing.
+
+Edge computing is transforming the way data is being handled, processed, and delivered from/to the devices around the world.
+
 And today you can register your laptop (or another device) to the edge cluster to see all features of Edge computing.
 
 In this workshop, you will explore the following capabilities:
 
-- Understand Open Horizon
+- Understand Open-Horizon
 - Learn how to add and configure edge nodes
 - Learn how to register a new edge services
+
+---
+
+https://www.lfedge.org/projects/openhorizon/
+
 
 ---
 
@@ -20,11 +27,12 @@ First you need to install some software and make pre-configuration of your envir
 
 Some services like your machine Docker and edge service you will deploy are using lab server certificates for their connections.
 
-To download these certificates go to helper UI and click on `Download server certificates` link.
+To download these certificates to you machine you should go 
+to helper UI and click on `Download server certificates` link.
 
 <img alt="Download server certificates" src="doc/img/download-server-certs.jpg" width="240">
 
-Archive file with certificates includes:
+Contents is an archive file the following cert files:
 
 - `registry.crt` -- for Docker to connect to image registry
 - `ca.crt` -- for edge service to connect lab server machine
@@ -33,7 +41,7 @@ Unzip this file to anywhere on your machine, but remember the paths to certs - w
 
 ### Obtaining your lab user credentials
 
-To see the progress during workshop and get test user credentials visit helper UI welcome page ([link on the helper UI]()) and click on `Obtain token` button.
+To help you with finding your progress during making these scripts for edge configuration & deployment, and to start with test user credentials for lab completion, you should visit helper UI welcome page ([link on the helper UI]()) and click on `Obtain token` button.
 
 You can then see obtained user ID in place of button you clicked, and this user ID is also showing in the right-top corner of the helper UI page.
 
@@ -51,18 +59,11 @@ Your credentials are reserved for you after obtaining, and you will be able to c
 
 ### Populating environment variables config
 
-In your lab working directory you can see `envvars.mk.sample` file with some environment properties, required for lab scripts execution.
+In your lab working directory you can see `envvars.mk` file with some environment properties, required for lab scripts execution.
 
-Create a copy of it named `envvars.mk`.
+Make a clipboard copy of your user credentials from welcome page by clicking on `Copy credentials` button there (see [Obtaining your lab user credentials](#obtaining-your-lab-user-credentials))
 
-```bash
-cp envvars.mk.sample envvars.mk
-# then edit envvars.mk file and put missing data
-```
-
-Now make a clipboard copy of your user credentials from welcome page by clicking on `Copy credentials` button there (see [Obtaining your lab user credentials](#obtaining-your-lab-user-credentials))
-
-Place these credentials in envvars.mk file, considering that:
+Place these credentials in `envvars.mk` file, considering that:
 
 - `HORIZON_USER` and `HORIZON_TOKEN` -- Horizon access credentials, and respectively your user ID and token you copied just now.
 - `HORIZON_NODE` and `HORIZON_NODE_TOKEN` -- Your edge node specific credentials, just come up with some kind of your node ID and node token to register it in Exchange.
@@ -72,7 +73,7 @@ This set of variables is enough for all operations below, so you can continue to
 
 ### Setup Docker environment to work with images registry
 
-Since there is a private registry raised for the Docker images that users will publish to there and run as edge services, we also need to provide registry cert for Docker to make it able to push images in that registry.
+Since there is a private registry raised for the Docker images that users will publish to there and run as edge services, we also need to provide registry cert for Docker to make it available to push images in that registry.
 
 If you haven't yet downloaded `registry.crt` file, pass the [Obtaining lab server certificates](#obtaining-lab-server-certificates) and then [Populating environment variables config](#populating-environment-variables-config) sections above.
 
@@ -222,7 +223,7 @@ hzn exchange pattern list \
 
 It's time to make our node Horizon agent do real job for us.
 
-At first, create your node definition at Horizon Exchange to make it visible for our next configuration.
+At first, it is useful to create your node definition at Horizon Exchange to make it visible for our next configuration.
 
 ```bash
 make create-node
@@ -254,7 +255,7 @@ Since this moment, you Horizon agent is trying to obtain a new agreement for wor
 
 ### Proccess monitoring
 
-Commands below are optional, but can help to understand the Horizon agent behaviour.
+Commands below are optional, but can help with understanding that our Horizon agent is processing agreements and executing services deployment.
 
 Good way to monitor agreements & events our agent has for service deployments is to use `hzn` CLI command.
 
@@ -312,7 +313,11 @@ Here are the example log of events for Horizon agent, receiving by that command:
 ]
 ```
 
-Of course, since services are starting as Docker containers, you can invoke `docker ps` command to see whether your service is already running.
+Of course, since services are starting as Docker containers, you can invoke to see whether your service is already running:
+
+```bash
+docker ps
+```
 
 To see service logs, you can perform one of the following commands according to your platform.
 
@@ -332,7 +337,7 @@ Here `hellothink` is the name of your service.
 
 ### Summary
 
-So after completing this workshop you should be able to understand the main concepts of Edge computing and Open Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
+So after completing this workshop you should be able to understand the main concepts of Edge computing and Open-Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
 
 ### Cleanup
 
@@ -350,8 +355,7 @@ make clean
 
 ### How to get a completion certificate
 
-To get the certificate please go to the UI: Link, 
-find you edge device registered, check if service is up and running and print certificate!
+To get the certificate please go [to the helper UI](https://169.50.56.52:4000), find you edge device registered, check if service is up and running and print certificate!
 
 ### Useful links
 

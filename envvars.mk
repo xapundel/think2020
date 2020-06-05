@@ -1,13 +1,13 @@
 .EXPORT_ALL_VARIABLES:
 
 # Horizon Exchange URI
-HZN_EXCHANGE_URL=
+HZN_EXCHANGE_URL=http://169.50.56.52:8080/v1/
 
 # Horizon organization ID (main realm for all nodes, service and users)
-E_HZN_ORG_ID=
+E_HZN_ORG_ID=thinkmoscow
 
 # Image registry address
-REGISTRY_ADDRESS=
+REGISTRY_ADDRESS=169.50.56.52:443
 
 # Horizon machine CA certificate local path
 # (e.g. /Users/test/think2020/ca.crt)
@@ -43,4 +43,4 @@ HORIZON_NODE_AUTH=${HORIZON_NODE}:${HORIZON_NODE_TOKEN}
 
 # Node userinput variables
 # (will be used as env variables for running edge service)
-MQTT_BROKER_URI=
+MQTT_BROKER_URI=mqtts://169.50.56.52:8883
