@@ -339,6 +339,10 @@ Here `hellothink` is the name of your service.
 
 So after completing this workshop you should be able to understand the main concepts of Edge computing and Open-Horizon project, understand all advantages that give us Edge computing and how it could be used in different industries and possible use cases and finally to configure and register chosen device as edge node, run the service that will be contolled by horizon exchange.
 
+### How to get a completion certificate
+
+To get the certificate please go [to the helper UI](https://169.50.56.52:4000), find you edge device registered, check if service is up and running and print certificate!
+
 ### Cleanup
 
 To unregister device node and stop all running services created by Horizon agent on it, run the following command:
@@ -352,10 +356,6 @@ Then run cleanup script to remove Docker images from local machine, Horizon Exch
 ```bash
 make clean
 ```
-
-### How to get a completion certificate
-
-To get the certificate please go [to the helper UI](https://169.50.56.52:4000), find you edge device registered, check if service is up and running and print certificate!
 
 ### Useful links
 
