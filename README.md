@@ -23,6 +23,8 @@ https://www.lfedge.org/projects/openhorizon/
 
 First you need to install some software and make pre-configuration of your environment. Make sure you have passed [Preparation & pre-installation guide](Preparation.md) for that.
 
+If you have any problems with preparation, please [create an issue](https://github.com/xapundel/think2020/issues) in this repo.
+
 ### Obtaining lab server certificates
 
 Some services like your machine Docker and edge service you will deploy are using lab server certificates for their connections.
